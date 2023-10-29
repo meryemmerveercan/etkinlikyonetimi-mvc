@@ -1,0 +1,68 @@
+﻿@model EtkinlikEditViewModel
+
+<div class="col-6">
+	<h2>Etkinlik Güncelle</h2>
+
+	@using (Html.BeginForm())
+	{
+		@Html.HiddenFor(model=> model.Id)
+		<div class="form-group">
+			Başlık
+			@Html.EditorFor(model => model.Baslik, new { htmlAttributes = new { @class = "form-control" } })
+		</div>
+
+		<div class="form-group mt-2">
+			Yer
+			@Html.EditorFor(model => model.Yer, new { htmlAttributes = new { @class = "form-control" } })
+		</div>
+
+		<div class="form-group mt-2">
+			Zaman
+			@Html.EditorFor(model => model.Zaman, new { htmlAttributes = new { @class = "form-control", @type="date" } })
+		</div>
+
+		<div class="form-group mt-2">
+			Açıklama
+			@Html.EditorFor(model => model.Aciklama, new { htmlAttributes = new { @class = "form-control" } })
+		</div>
+
+		<div class="form-group mt-2">
+			Ücretli
+			@Html.RadioButtonFor(model => model.UcretTip, "Ücretli", new { htmlAttributes = new { @class = "form-control" }})
+
+			Ücretsiz
+			@Html.RadioButtonFor(model => model.UcretTip, "Ücretsiz", new { htmlAttributes = new { @class = "form-control"}})
+		</div>
+
+		<div class="form-group mt-2 formGroupUcret">
+			Ücret
+			@Html.EditorFor(model => model.Ucret, new { htmlAttributes = new {@class = "form-control"} })
+		</div>
+
+		<div class="form-group mt-2">
+			<button class="btn btn-secondary" onclick="history.go(-1); return false;" href="#">Geri</button>
+			<button type="submit" value="Submit" class="btn btn-primary">Kaydet</button>
+		</div>
+	}
+</div>
+
+<input type="hidden" id="ucretTip" value="@Model.UcretTip" />
+
+<script>
+	$(document).ready(function () {
+		if ($("#ucretTip").val() == "Ücretli") {
+			$('.formGroupUcret').show();
+		} else {
+			$('.formGroupUcret').hide();
+		}
+
+		$(':radio[value=Ücretli]').click(function () {
+			$('.formGroupUcret').show();
+		});
+		$(':radio[value=Ücretsiz]').click(function () {
+			$('.formGroupUcret').hide();
+		});
+	});
+</script>
+
+
